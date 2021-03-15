@@ -1,0 +1,60 @@
+<html>
+<head>
+<script>
+    if (typeof ue != "object" || typeof ue.interface != "object" || ue.interface.broadcast != "function")
+    {
+        if (typeof ue != "object")
+            ue = {};
+
+        // mobile
+        ue.interface = {};
+        ue.interface.broadcast = function(name, data)
+        {
+            if (typeof name != "string")
+                return;
+
+            var args = [name, ""];
+            if (typeof data != "undefined")
+                args[1] = data;
+
+            var hash = encodeURIComponent(JSON.stringify(args));
+            if (typeof history == "object" && typeof history.pushState == "function")
+            {
+                history.pushState({}, "", "#" + hash);
+                history.pushState({}, "", "#" + encodeURIComponent("[]"));
+            }
+            else
+            {
+                document.location.hash = hash;
+                document.location.hash = encodeURIComponent("[]");
+            }
+        };
+    }
+    else
+        (function(obj)
+        {
+            // desktop
+            ue.interface = {};
+            ue.interface.broadcast = function(name, data)
+            {
+                if (typeof name != "string")
+                    return;
+
+                if (typeof data != "undefined")
+                    obj.broadcast(name, JSON.stringify(data));
+                else
+                    obj.broadcast(name, "");
+            };
+        })(ue.interface);
+
+    // create the global ue4(...) helper function
+    ue4 = ue.interface.broadcast;
+    ue4("debug",
+    {
+        "browser": navigator.userAgent,
+        "time": Date.now()
+    });
+</script>
+</head>
+<body style="background-color: white; color: black;">hello, world...</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+<!--    <script src="https://unpkg.com/mqtt@4.1.0/dist/mqtt.min.js"></script>-->
+    <title>Title</title>
+    <script src="./js/mqtt.js"></script>
+
+</head>
+<body style="font-size: 5rem" bgcolor="#7FFFD4">
+<h1> <button  style="font-size: 5rem;" onclick="connectMqtt()">点击click 连接mqtt</button></h1>
+mqtt 连接状态 <h5 id="status"></h5>
+
+<script>
+    var dom = document.getElementById('status');
+    var client, topic = 'face_sign';
+    console.log()
+    function connectMqtt (url) {
+        const options = {
+            clean: true, // 保留回话
+            connectTimeout: 4000, // 超时时间
+            // 认证信息
+            clientId: '',
+            username: 'emqx_test',
+            password: 'emqx_test'
+        }
+        // const connectUrl = 'ws://' + url
+        // var connectUrl = 'ws://10.11.35.179:8083/mqtt'
+        var connectUrl = 'ws://127.0.0.1:8083/mqtt'
+        client = mqtt.connect(connectUrl, options)
+        var reqeatTimes = 0
+        client.on('reconnect', (error) => {
+            if (reqeatTimes < 5) {
+                reqeatTimes++
+                console.log('正在重连:', error, reqeatTimes)
+                dom.innerText = '正在重连:' + reqeatTimes;
+                // client = mqtt.connect(connectUrl, options)
+            } else {
+                dom.innerText = '重连失败, 结束重试';
+                console.log('重连失败, 结束重试')
+                client.end()
+                client = null
+            }
+        })
+        client.on('connect', (msg) => {
+            dom.innerText = 'connect success';
+            console.log('连接成功:', msg)
+            reqeatTimes = 0
+            client.subscribe('face_sign')
+            client.publish('hello', 'hello mqtt!')
+            console.log('订阅')
+        })
+
+        client.on('error', (error) => {
+            console.log('连接失败:', error)
+        })
+
+        client.on('message', (topic, message) => {
+            console.log('收到消息：', topic, message.toString())
+
+            /*if (topic === topic) {
+                let obj = JSON.parse(message.toString())
+                this.item = obj
+                // this.mqttList.push(message)
+                if (message.temp_val > this.threshold) {
+                    this.warnList.unshift(obj)
+                    if (this.warnList.length > this.maxStorage) {
+                        this.warnList.pop()
+                    }
+                    localStorage.setItem('warnList', JSON.stringify(this.warnList))
+                }
+            }*/
+        })
+    }
+</script>
+</body>
+</html>
