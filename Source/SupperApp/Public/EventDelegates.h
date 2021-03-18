@@ -17,8 +17,9 @@ class SUPPERAPP_API UEventDelegates : public UObject
 public:
 
 	DECLARE_MULTICAST_DELEGATE_OneParam(LoginResultDelegate, const FString&);
+	DECLARE_MULTICAST_DELEGATE(RedirectCheckMeDelegate);
 
 	static LoginResultDelegate OnLoginResultDelegate;
-
+	static RedirectCheckMeDelegate OnRedirectCheckMeDelegate;
 	
 };

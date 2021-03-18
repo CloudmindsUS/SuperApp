@@ -5,6 +5,7 @@
 #include <string>
 #include "MessageDialog.h"
 #include "EventDelegates.h"
+#include "HomeHUD.h"
 
 bool ULoginWidget::Initialize() {
 	if (!Super::Initialize()) {
@@ -152,7 +153,7 @@ void ULoginWidget::LoginRequestComplete(FHttpRequestPtr requestPtr, FHttpRespons
 			UE_LOG(LogTemp, Warning, TEXT("mobile url:%s"), *url);
 			UEventDelegates::OnLoginResultDelegate.Broadcast(url);
 
-			OnLoginRequestComplete();
+			OnExitingLoginWidget();
 		}
 		else {
 			FString msg = rObject->GetStringField(TEXT("err_detail"));
@@ -295,6 +296,13 @@ void ULoginWidget::Login2RdpRequestComplete(FHttpRequestPtr requestPtr, FHttpRes
 
 
 	UE_LOG(LogTemp, Warning, TEXT("login response:%s"), *responseResult);
+
+}
+
+void ULoginWidget::handleRedirectToCheckMeEvent() {
+	UE_LOG(LogTemp, Warning, TEXT("handleRedirectToCheckMeEvent Called"));
+	UEventDelegates::OnRedirectCheckMeDelegate.Broadcast();
+	OnExitingLoginWidget();
 
 }
 

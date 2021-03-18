@@ -23,14 +23,17 @@ public:
 	virtual void DrawHUD() override;
 
 	void OnLoginResult(const FString &url);
+	void OnRedirectCheckMe();
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "homehud")
 		void OnLoginSuccessful();
 
 	UFUNCTION(BlueprintImplementableEvent, Category = "homehud")
-		void OnLoginSuccessfulWithUrl(const FString& url);
+		void ApplyLoginSuccessfulWithUrl(const FString& url);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "homehud")
+		void ApplyRedirectCheckMe();
 
 	UPROPERTY(EditAnywhere,BlueprintReadWrite,Category="homehud")
-		
 		class UUserWidget* HomeWidget;
 };

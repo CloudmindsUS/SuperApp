@@ -4,3 +4,4 @@
 #include "EventDelegates.h"
 
 UEventDelegates::LoginResultDelegate UEventDelegates::OnLoginResultDelegate;
+UEventDelegates::RedirectCheckMeDelegate UEventDelegates::OnRedirectCheckMeDelegate;

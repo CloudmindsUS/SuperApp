@@ -75,8 +75,12 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = "clickFunction")
 		void handleRegisterClickedEvent();
+
+	UFUNCTION(BlueprintCallable, Category = "clickFunction")
+		void handleRedirectToCheckMeEvent();
+
 	UFUNCTION(BlueprintImplementableEvent, Category = "clickFunction")
-		void OnLoginRequestComplete();
+		void OnExitingLoginWidget();
 	UPROPERTY(EditAnywhere)
 		bool searchLocalServer;
 };
