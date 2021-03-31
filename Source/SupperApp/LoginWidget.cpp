@@ -58,6 +58,8 @@ bool ULoginWidget::Initialize() {
 	manualIpBtn->SetVisibility(ESlateVisibility::Hidden);
 	foundIpTb->SetVisibility(ESlateVisibility::Hidden);
 
+	UEventDelegates::OnHandleRedirectCheckMeDelegate.AddUObject(this, &ThisClass::handleRedirectToCheckMeEvent);
+
 	if (searchLocalServer)
 		SearchLocalServer();
 

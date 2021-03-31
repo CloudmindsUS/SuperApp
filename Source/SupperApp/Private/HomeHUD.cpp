@@ -10,6 +10,8 @@ void AHomeHUD::DrawHUD() {
 	if (!bAdded) {
 		UEventDelegates::OnLoginResultDelegate.AddUObject(this, &ThisClass::OnLoginResult);
 		UEventDelegates::OnRedirectCheckMeDelegate.AddUObject(this, &ThisClass::OnRedirectCheckMe);
+		// Skip login menu
+		UEventDelegates::OnHandleRedirectCheckMeDelegate.Broadcast();
 		bAdded = true;
 	}
 	

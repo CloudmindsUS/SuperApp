@@ -5,3 +5,4 @@
 
 UEventDelegates::LoginResultDelegate UEventDelegates::OnLoginResultDelegate;
 UEventDelegates::RedirectCheckMeDelegate UEventDelegates::OnRedirectCheckMeDelegate;
+UEventDelegates::HandleRedirectCheckMeDelegate UEventDelegates::OnHandleRedirectCheckMeDelegate;

@@ -18,8 +18,10 @@ public:
 
 	DECLARE_MULTICAST_DELEGATE_OneParam(LoginResultDelegate, const FString&);
 	DECLARE_MULTICAST_DELEGATE(RedirectCheckMeDelegate);
+	DECLARE_MULTICAST_DELEGATE(HandleRedirectCheckMeDelegate);
 
 	static LoginResultDelegate OnLoginResultDelegate;
 	static RedirectCheckMeDelegate OnRedirectCheckMeDelegate;
+	static HandleRedirectCheckMeDelegate OnHandleRedirectCheckMeDelegate;
 	
 };
